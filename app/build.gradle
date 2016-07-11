@@ -1,0 +1,55 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+    dexOptions {
+        javaMaxHeapSize "4g" //specify the heap size for the dex process
+        preDexLibraries = false //delete the already predexed libraries
+    }
+    defaultConfig {
+        applicationId "com.yuen.yizu"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    signingConfigs {
+        keystore {
+            keyAlias 'mafuhua'
+            keyPassword '123456'
+            storeFile file('C:/Users/Administrator/AndroidStudioProjects/yizu/app/src/keystore.jks')
+            storePassword '123456'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            debuggable true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.keystore
+            shrinkResources true
+            buildConfigField "String", "BASE_URL", ENV_PRODUCT_URL
+            buildConfigField "int", "CONNECT_TIMEOUT", CONNECT_TIMEOUT
+            buildConfigField "int", "READ_TIMEOUT", READ_TIMEOUT
+            buildConfigField "int", "WRITE_TIMEOUT", WRITE_TIMEOUT
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'cn.finalteam:galleryfinal:1.4.8.7'
+}
